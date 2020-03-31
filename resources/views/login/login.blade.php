@@ -23,6 +23,13 @@
 </body>
 </html>
 <script>
+    $.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+</script>
+<script>
 
   function conexion() {
     axios.defaults.headers.common.Accept = 'application/json'
