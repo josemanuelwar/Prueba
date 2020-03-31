@@ -12,14 +12,14 @@
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
     <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body>
     <label for="">Nombre</label>
-    <input type="text" name="usuario" id="usuario">
+    <input type="text" name="usuario" class="form-control" id="usuario">
     <label for="">Contraseña</label>
-    <input type="password" name="password" id="password">
-    <input type="submit" value="enviar">
-    <button onclick="conexion();">hgxyv</button>
+    <input type="password" name="password" class="form-control" id="password">
+    <button onclick="conexion();">enviar</button>
 </body>
 </html>
 <script>
@@ -30,20 +30,28 @@
 });
 </script>
 <script>
+function conexion() {
+    var usuario=document.getElementById('usuario').value;
+    var contraseña=document.getElementById('password').value;
+    var url = 'http://expertensoft.com/API/users/v1/login/archivo.json?callback=envoltorio'
+$.ajax(
+   { url: 'http://expertensoft.com',
+     type: 'post',//tipo de petición
+     dataType: 'jsonp', //tipo de datos
+     jsonpCallback: 'envoltorio',  //nombre de la funcion que envuelve la respuesta
+     error: function(xhr, status, error) {
+        alert("error");
+     },
+     success: function(jsonp) {
+        if(jsonp.usuario  == usuario && jsonp.password == contraseña){
+          alert('Bienvenido');
+        }else{
+          alert("fallo");
+        }
 
-  function conexion() {
-    axios.defaults.headers.common.Accept = 'application/json'
-    axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
-    axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
-      axios.post('http://expertensoft.com/API/users/v1/login',{
-          usuario: 'paco',
-          password: 'paco123'
-        },)
-        .then(function (response) {
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-  }
+     }
+    }
+);
+envoltorio({"usuario":"paco","password":"paco123"})
+}
 </script>
